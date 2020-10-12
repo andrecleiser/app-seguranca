@@ -43,19 +43,17 @@ public class AutenticacaoApi {
     @Inject
     EncryptDecrypt ed;
 
+    // @POST
+    // @Path("senha")
+    // public Response obterSenhaCriptografada(SegurancaDto credenciais) {
+    //     String hashSenha = CriptografiaUtil.gerarHash(credenciais.getHashSenha());
+    //     String chaveEnc = this.ed.encrypt(credenciais.getChavePrivadaEncripty());
 
-    @POST
-    @Path("senha")
-    public Response obterSenhaCriptografada(SegurancaDto credenciais) {
-        String hashSenha = CriptografiaUtil.gerarHash(credenciais.getHashSenha());
-        String chaveEnc = this.ed.encrypt(credenciais.getChavePrivadaEncripty());
-
-        return Response.ok(new SegurancaDto(hashSenha, chaveEnc)).build();
-    }
+    //     return Response.ok(new SegurancaDto(hashSenha, chaveEnc)).build();
+    // }
 
     @POST
     public Response autenticar(UsuarioDto autenticacao, @Context HttpRequest httpRequest) throws Exception {
-        // URI uri = httpRequest.getUri().getAbsolutePath();
         PrivateKey chave = null;
         Usuario usuario = null;
 
