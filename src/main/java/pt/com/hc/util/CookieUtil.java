@@ -15,11 +15,11 @@ public class CookieUtil {
     public static NewCookie[] gerarCookieComTokenAcesso(TokenDto tokenAcesso, String host) {
         List<NewCookie> listaCookies = new ArrayList<>();
 
-        listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", host, null,
+        listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", null, null,
                 EXPIRA_EM_MINUTOS, false, false));
 
-        // listaCookies.add(new NewCookie("tokenAcesso", tokenAcesso.getTokenAcesso(), "/", null, null,
-        //         EXPIRA_EM_MINUTOS, false, false));
+        listaCookies.add(new NewCookie("tokenServico", tokenAcesso.getTokenAcesso(), "/", host, null,
+                EXPIRA_EM_MINUTOS, true, true));
 
         NewCookie[] cookies = new NewCookie[listaCookies.size()];
         cookies = listaCookies.toArray(cookies);
