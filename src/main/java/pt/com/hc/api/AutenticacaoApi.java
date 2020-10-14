@@ -1,6 +1,5 @@
 package pt.com.hc.api;
 
-import java.net.URI;
 import java.security.PrivateKey;
 import java.util.Optional;
 
@@ -12,7 +11,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -55,7 +53,7 @@ public class AutenticacaoApi {
     }
 
     @POST
-    public Response autenticar(UsuarioDto autenticacao, @Context HttpRequest httpRequest, @Context UriInfo uri) throws Exception {
+    public Response autenticar(UsuarioDto autenticacao, @Context HttpRequest httpRequest) throws Exception {
         PrivateKey chave = null;
         Usuario usuario = null;
 
@@ -79,6 +77,6 @@ public class AutenticacaoApi {
         }
 
         TokenDto token = this.tokenServico.gerarToken(usuario, chave);
-        return Response.status(Status.CREATED).cookie(CookieUtil.gerarCookieComTokenAcesso(token, uri.getBaseUri().toURL().getHost())).build();
+        return Response.status(Status.CREATED).cookie(CookieUtil.gerarCookieComTokenAcesso(token)).build();
     }
 }
