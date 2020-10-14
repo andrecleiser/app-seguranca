@@ -1,5 +1,6 @@
 package pt.com.hc.api;
 
+import java.net.URI;
 import java.security.PrivateKey;
 import java.util.Optional;
 
@@ -11,17 +12,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.spi.HttpRequest;
 
+import pt.com.hc.dto.SegurancaDto;
 import pt.com.hc.dto.TokenDto;
 import pt.com.hc.dto.UsuarioDto;
 import pt.com.hc.entidade.Usuario;
 import pt.com.hc.servicos.AutenticarServico;
 import pt.com.hc.servicos.TokenServico;
 import pt.com.hc.util.CookieUtil;
+import pt.com.hc.util.CriptografiaUtil;
 import pt.com.hc.util.EncryptDecrypt;
 
 @Path("/autenticacao")
@@ -41,17 +45,17 @@ public class AutenticacaoApi {
     @Inject
     EncryptDecrypt ed;
 
-    // @POST
-    // @Path("senha")
-    // public Response obterSenhaCriptografada(SegurancaDto credenciais) {
-    //     String hashSenha = CriptografiaUtil.gerarHash(credenciais.getHashSenha());
-    //     String chaveEnc = this.ed.encrypt(credenciais.getChavePrivadaEncripty());
+    @POST
+    @Path("senha")
+    public Response obterSenhaCriptografada(SegurancaDto credenciais) {
+        String hashSenha = CriptografiaUtil.gerarHash(credenciais.getHashSenha());
+        String chaveEnc = this.ed.encrypt(credenciais.getChavePrivadaEncripty());
 
-    //     return Response.ok(new SegurancaDto(hashSenha, chaveEnc)).build();
-    // }
+        return Response.ok(new SegurancaDto(hashSenha, chaveEnc)).build();
+    }
 
     @POST
-    public Response autenticar(UsuarioDto autenticacao, @Context HttpRequest httpRequest) throws Exception {
+    public Response autenticar(UsuarioDto autenticacao, @Context HttpRequest httpRequest, @Context UriInfo uri) throws Exception {
         PrivateKey chave = null;
         Usuario usuario = null;
 
@@ -75,6 +79,6 @@ public class AutenticacaoApi {
         }
 
         TokenDto token = this.tokenServico.gerarToken(usuario, chave);
-        return Response.status(Status.CREATED).cookie(CookieUtil.gerarCookieComTokenAcesso(token)).build();
+        return Response.status(Status.CREATED).cookie(CookieUtil.gerarCookieComTokenAcesso(token, uri.getBaseUri().toURL().getHost())).build();
     }
 }

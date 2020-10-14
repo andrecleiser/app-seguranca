@@ -34,7 +34,7 @@ public class Sistema extends PanacheEntityBase {
     public String clienteId;
     public String clienteSecret;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "tb_gestao_acesso",
         joinColumns = @JoinColumn(name = "id_sistema"),

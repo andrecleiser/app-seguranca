@@ -12,8 +12,6 @@
       usuario: postgres
       senha: "123456"
 
-    flyway-localizacao: db/scripts/v1_0_0
-
   quarkus:
     hibernate-orm:
       log:
@@ -32,14 +30,12 @@
       usuario: ${DATABASE_USER}
       senha: ${DATABASE_PASSWORD}
     
-    flyway-localizacao: db/scripts/prod
-
 quarkus:
   http:
     cors:
       ~: true
       origin: ${conf.app.url.frontend}
-    port: 8080
+    port: 8081
 
   datasource:
     db-kind: postgresql
@@ -51,20 +47,20 @@ quarkus:
       max-size: 16
 
   flyway:
-    migrate-at-start: false
+    migrate-at-start: true
     schemas: public
     table: flyway_versoes
-    locations: ${conf.flyway-localizacao}
+    locations: db/migration
 
   smallrye-jwt:
     enabled: true
 
-mp:
-  jwt:
-    verify:
-      issuer: app-security
-      publickey:
-        location: META-INF/resources/publicKey.pem
+# mp:
+#   jwt:
+#     verify:
+#       issuer: app-security
+#       publickey:
+#         location: META-INF/resources/publicKey.pem
 
 smallrye:
   jwt:

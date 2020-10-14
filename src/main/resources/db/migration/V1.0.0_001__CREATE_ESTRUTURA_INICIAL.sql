@@ -14,12 +14,13 @@ create table tb_sistema (
     sigla varchar(15) not null,
     nome varchar(80) not null,
     ativo boolean default false,
-    clienteId text not null,
-    clienteSecret text not null,
+    clienteId varchar(36) not null,
+    clienteSecret varchar(36) not null,
     chave_privada text,
 
     constraint pk_tb_sistema primary key(id_sistema),
-    constraint un_tb_sistema_sigla unique(sigla)
+    constraint un_tb_sistema_sigla unique(sigla),
+    constraint idx_tb_sistema_clienteId unique(clienteId)
 );
 
 create table tb_perfil (

@@ -31,7 +31,7 @@ public class Usuario extends PanacheEntityBase {
     public String email;
     public String senha;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "tb_gestao_acesso",
         joinColumns = @JoinColumn(name = "id_usuario"),
@@ -39,7 +39,7 @@ public class Usuario extends PanacheEntityBase {
     )
     private List<Perfil> perfis;
 
-    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY)
     private List<Sistema> sistemas;
 
     public List<Perfil> getPerfis() {
