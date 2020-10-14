@@ -47,6 +47,8 @@ quarkus:
     password: ${conf.db.senha}
     jdbc:
       url: jdbc:postgresql://${conf.db.host}:${conf.db.port}/${conf.db.nome}
+      min-size: 4
+      max-size: 16
 
   flyway:
     migrate-at-start: false
