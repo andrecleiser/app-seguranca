@@ -16,14 +16,12 @@ import javax.ws.rs.core.Response.Status;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.spi.HttpRequest;
 
-import pt.com.hc.dto.SegurancaDto;
 import pt.com.hc.dto.TokenDto;
 import pt.com.hc.dto.UsuarioDto;
 import pt.com.hc.entidade.Usuario;
 import pt.com.hc.servicos.AutenticarServico;
 import pt.com.hc.servicos.TokenServico;
 import pt.com.hc.util.CookieUtil;
-import pt.com.hc.util.CriptografiaUtil;
 import pt.com.hc.util.EncryptDecrypt;
 
 @Path("/autenticacao")

@@ -1,0 +1,71 @@
+# Configuration file
+"%dev":
+  conf:
+    app:
+      url:
+        frontend: http://localhost:4200
+
+    db:
+      nome: app_security_db
+      host: localhost
+      port: 5434
+      usuario: postgres
+      senha: "123456"
+
+    flyway-localizacao: db/scripts/v1_0_0
+
+  quarkus:
+    hibernate-orm:
+      log:
+        sql: true
+
+"%prod":
+  conf:
+    app:
+      url:
+        frontend: ${URL_APLICACAO_FRONTEND}
+
+    db:
+      nome: ${DATABASE_NAME}
+      host: ${DATABASE_HOST}
+      port: ${DATABASE_PORT}
+      usuario: ${DATABASE_USER}
+      senha: ${DATABASE_PASSWORD}
+    
+    flyway-localizacao: db/scripts/prod
+
+quarkus:
+  http:
+    cors:
+      ~: true
+      origin: ${conf.app.url.frontend}
+    port: 8080
+
+  datasource:
+    db-kind: postgresql
+    username: ${conf.db.usuario}
+    password: ${conf.db.senha}
+    jdbc:
+      url: jdbc:postgresql://${conf.db.host}:${conf.db.port}/${conf.db.nome}
+
+  flyway:
+    migrate-at-start: false
+    schemas: public
+    table: flyway_versoes
+    locations: ${conf.flyway-localizacao}
+
+  smallrye-jwt:
+    enabled: true
+
+mp:
+  jwt:
+    verify:
+      issuer: app-security
+      publickey:
+        location: META-INF/resources/publicKey.pem
+
+smallrye:
+  jwt:
+    token:
+      header: Cookie
+      cookie: tokenServico
