@@ -14,7 +14,7 @@ public class CookieFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
         for (String name : requestContext.getCookies().keySet()) {
             Cookie cookie = requestContext.getCookies().get(name);
-            System.out.println(cookie.getName());
+            System.out.println("Segurança: " + cookie.getName());
         }
     }
 
