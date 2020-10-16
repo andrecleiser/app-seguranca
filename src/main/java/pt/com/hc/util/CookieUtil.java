@@ -22,11 +22,11 @@ public class CookieUtil {
     public NewCookie[] gerarCookieComTokenAcesso(TokenDto tokenAcesso) {
         List<NewCookie> listaCookies = new ArrayList<>();
 
-        listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", null, null,
-                EXPIRA_EM_MINUTOS, false, false));
+        listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", 
+            "https://app-seguranca-api.herokuapp.com", null, EXPIRA_EM_MINUTOS, false, false));
 
-        listaCookies.add(new NewCookie("tokenServico", tokenAcesso.getTokenAcesso(), "/", null, null, EXPIRA_EM_MINUTOS,
-                cookieSeguro, true));
+        listaCookies.add(new NewCookie("tokenServico", tokenAcesso.getTokenAcesso(), "/",
+            "https://app-seguranca-api.herokuapp.com", null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
 
         NewCookie[] cookies = new NewCookie[listaCookies.size()];
         cookies = listaCookies.toArray(cookies);
