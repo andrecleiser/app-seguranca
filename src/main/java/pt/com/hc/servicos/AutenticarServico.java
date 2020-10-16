@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import pt.com.hc.entidade.Sistema;
 import pt.com.hc.entidade.Usuario;
 import pt.com.hc.exception.GeralException;
+import pt.com.hc.exception.seguranca.AutenticacaoException;
 import pt.com.hc.util.CriptografiaUtil;
 import pt.com.hc.util.EncryptDecrypt;
 
@@ -24,7 +25,7 @@ public class AutenticarServico {
     EncryptDecrypt encryptDecrypt;
 
     public PrivateKey obterChavePrivadaAplicacao(String appCliente)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
+            throws NoSuchAlgorithmException, InvalidKeySpecException, GeralException {
 
         Optional<Sistema> sistema = this.validarCredencialApplicacao(appCliente);
 
@@ -57,11 +58,11 @@ public class AutenticarServico {
         return Base64.getDecoder().decode(normalizedPem);
     }
 
-    public Usuario validarUsuario(String email, String senha) {
+    public Usuario validarUsuario(String email, String senha) throws AutenticacaoException, GeralException {
         Optional<Usuario> usuario = Optional.ofNullable(Usuario.find("email", email).firstResult());
 
-        if (usuario.isPresent() && (!usuario.get().senha.equals(CriptografiaUtil.gerarHash(senha)))) {
-            throw new GeralException("Usuário ou senha inválido!");
+        if ((!usuario.isPresent()) || (usuario.isPresent() && (!usuario.get().senha.equals(CriptografiaUtil.gerarHash(senha))))) {
+            throw new AutenticacaoException();
         }
 
         return usuario.get();

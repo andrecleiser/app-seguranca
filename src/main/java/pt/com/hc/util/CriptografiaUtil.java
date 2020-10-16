@@ -22,8 +22,9 @@ public class CriptografiaUtil {
 	/**
      * @param valor - valor utilizado para gerar o hash.
      * @return hash do valor + frase passados com algoritmo SHA.
+     * @throws GeralException
      */
-    public static String gerarHash(String valor) {
+    public static String gerarHash(String valor) throws GeralException {
         return CriptografiaUtil.gerarHash(valor, null, TipoAlgoritmoCriptografiaEnum.SHA);
     }
 
@@ -31,29 +32,33 @@ public class CriptografiaUtil {
      * @param valor - valor utilizado para gerar o hash.
      * @param frase - frase que será combinada com o valor.
      * @return hash do valor + frase passados com algoritmo SHA.
+     * @throws GeralException
      */
-    public static String gerarHash(String valor, String frase) {
+    public static String gerarHash(String valor, String frase) throws GeralException {
         return CriptografiaUtil.gerarHash(valor, frase, TipoAlgoritmoCriptografiaEnum.SHA);
     }
 	
 	/**
-     * @param valor - valor utilizado para gerar o hash.
+     * @param valor     - valor utilizado para gerar o hash.
      * @param algoritmo - algorimo que será utilizado para gerar o hash
      * @return hash do valor com algoritmo informado.
+     * @throws GeralException
      */
-    public static String gerarHash(String valor, TipoAlgoritmoCriptografiaEnum algoritmo) {
+    public static String gerarHash(String valor, TipoAlgoritmoCriptografiaEnum algoritmo) throws GeralException {
         return CriptografiaUtil.gerarHash(valor, null, algoritmo);
     }
 
 	/**
      * Gera o hash de um texto.
      * 
-     * @param texto - texto a ser cifrado
-     * @param frase - frase que será combinada com o texto (opcional)
+     * @param texto     - texto a ser cifrado
+     * @param frase     - frase que será combinada com o texto (opcional)
      * @param algoritmo - algorimo utilizado para gerar o hash do texto
      * @return hash do texto + frase passados
+     * @throws GeralException
      */
-    public static String gerarHash(String texto, String frase, TipoAlgoritmoCriptografiaEnum algoritmo) {
+    public static String gerarHash(String texto, String frase, TipoAlgoritmoCriptografiaEnum algoritmo)
+            throws GeralException {
     
         try {
             final MessageDigest md = MessageDigest.getInstance(algoritmo.getTipoAlgoritmo());

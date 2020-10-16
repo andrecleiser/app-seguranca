@@ -1,6 +1,8 @@
 package pt.com.hc.api;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -20,6 +22,8 @@ import pt.com.hc.dto.SegurancaDto;
 import pt.com.hc.dto.TokenDto;
 import pt.com.hc.dto.UsuarioDto;
 import pt.com.hc.entidade.Usuario;
+import pt.com.hc.exception.GeralException;
+import pt.com.hc.exception.seguranca.AutenticacaoException;
 import pt.com.hc.servicos.AutenticarServico;
 import pt.com.hc.servicos.TokenServico;
 import pt.com.hc.util.CookieUtil;
@@ -43,9 +47,12 @@ public class AutenticacaoApi {
     @Inject
     EncryptDecrypt ed;
 
+    @Inject
+    CookieUtil cookieUtil;
+
     @POST
     @Path("senha")
-    public Response obterSenhaCriptografada(SegurancaDto credenciais) {
+    public Response obterSenhaCriptografada(SegurancaDto credenciais) throws GeralException {
         String hashSenha = CriptografiaUtil.gerarHash(credenciais.getHashSenha());
         String chaveEnc = this.ed.encrypt(credenciais.getChavePrivadaEncripty());
 
@@ -53,30 +60,22 @@ public class AutenticacaoApi {
     }
 
     @POST
-    public Response autenticar(UsuarioDto autenticacao, @Context HttpRequest httpRequest) throws Exception {
+    public Response autenticar(UsuarioDto autenticacao, @Context HttpRequest httpRequest) throws GeralException,
+            NoSuchAlgorithmException, InvalidKeySpecException, AutenticacaoException {
         PrivateKey chave = null;
         Usuario usuario = null;
 
-        try {
-            Optional<String> appCliente = Optional
-                    .ofNullable(httpRequest.getHttpHeaders().getHeaderString("Authorization"));
+        Optional<String> appCliente = Optional
+                .ofNullable(httpRequest.getHttpHeaders().getHeaderString("Authorization"));
 
-            if (!appCliente.isPresent()) {
-                throw new Exception("Credencias de sistema não informadas da forma correta.");
-            }
-
-            chave = this.autenticacaoServico.obterChavePrivadaAplicacao(appCliente.get());
-        } catch (Exception e) {
-            return Response.status(Status.BAD_REQUEST).entity(e).build();
+        if (!appCliente.isPresent()) {
+            throw new GeralException("Credencias de sistema não informadas da forma correta.");
         }
 
-        try {
-            usuario = this.autenticacaoServico.validarUsuario(autenticacao.getUsuario(), autenticacao.getSenha());
-        } catch (Exception e) {
-            return Response.status(Status.BAD_REQUEST).entity(e).build();
-        }
+        chave = this.autenticacaoServico.obterChavePrivadaAplicacao(appCliente.get());
+        usuario = this.autenticacaoServico.validarUsuario(autenticacao.getUsuario(), autenticacao.getSenha());
 
         TokenDto token = this.tokenServico.gerarToken(usuario, chave);
-        return Response.status(Status.CREATED).cookie(CookieUtil.gerarCookieComTokenAcesso(token)).build();
+        return Response.status(Status.CREATED).cookie(this.cookieUtil.gerarCookieComTokenAcesso(token)).build();
     }
 }

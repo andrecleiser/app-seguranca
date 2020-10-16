@@ -28,7 +28,7 @@ public class TokenServico {
      * @return the JWT string
      * @throws Exception on parse failure
      */
-    public TokenDto gerarToken(Usuario usuario, PrivateKey chave) throws Exception {
+    public TokenDto gerarToken(Usuario usuario, PrivateKey chave) {
         JwtClaimsBuilder tokenAcesso = Jwt.claims();
     
         long currentTimeInSecs = currentTimeInSecs();

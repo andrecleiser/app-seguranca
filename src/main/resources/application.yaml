@@ -4,7 +4,8 @@
     app:
       url:
         frontend: http://localhost:4200
-
+      cookie:
+        seguro: true
     db:
       nome: app_security_db
       host: localhost
@@ -22,6 +23,8 @@
     app:
       url:
         frontend: ${URL_APLICACAO_FRONTEND}
+      cookie:
+        seguro: true
 
     db:
       nome: ${DATABASE_NAME}
@@ -35,6 +38,7 @@ quarkus:
     cors:
       ~: true
       origin: ${conf.app.url.frontend}
+      access-control-allow-credentials: true
     port: 8081
 
   datasource:
