@@ -6,8 +6,7 @@
         frontend: http://localhost:4200
       cookie:
         seguro: false
-        dominio-api-recurso: localhost
-        dominio-api-seguranca: localhost
+        tempo-vida: 300
     db:
       nome: app_security_db
       host: localhost
@@ -27,8 +26,7 @@
         frontend: ${URL_APLICACAO_FRONTEND}
       cookie:
         seguro: true
-        dominio-api-recurso: ${DOMINIO_API_COOKIE_RECURSO}
-        dominio-api-seguranca: ${DOMINIO_API_COOKIE_SEGURANCA}
+        tempo-vida: 600
 
     db:
       nome: ${DATABASE_NAME}

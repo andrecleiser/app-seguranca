@@ -14,26 +14,21 @@ import pt.com.hc.dto.TokenDto;
 public class CookieUtil {
 
     private static final String NOME_TOKEN_ACESSO = "tokenAcesso";
-    private static final Integer EXPIRA_EM_MINUTOS = 60 * 5; // EXPIRA EM 5 MINUTOS
 
     @ConfigProperty(name = "conf.app.cookie.seguro")
     Boolean cookieSeguro;
 
-    @ConfigProperty(name = "conf.app.cookie.dominio-api-recurso")
-    String dominioApiRecurso;
-
-    @ConfigProperty(name = "conf.app.cookie.dominio-api-seguranca")
-    String dominioApiSeguranca;
+    @ConfigProperty(name = "conf.app.cookie.tempo-vida")
+    Integer tempoVida;
 
     public NewCookie[] gerarCookieComTokenAcesso(TokenDto tokenAcesso) {
         List<NewCookie> listaCookies = new ArrayList<>();
 
         listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", 
-        // dominioApiRecurso, null, EXPIRA_EM_MINUTOS, false, false));
-            null, null, EXPIRA_EM_MINUTOS, cookieSeguro, false));
+            null, null, tempoVida, false, false));
 
-        listaCookies.add(new NewCookie("refreshToken", tokenAcesso.getTokenAcesso(), "/",
-            null, null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
+        // listaCookies.add(new NewCookie("refreshToken", tokenAcesso.getTokenAcesso(), "/",
+        //     null, null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
 
         NewCookie[] cookies = new NewCookie[listaCookies.size()];
         cookies = listaCookies.toArray(cookies);
