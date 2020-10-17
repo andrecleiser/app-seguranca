@@ -28,7 +28,7 @@ public class CookieUtil {
     public NewCookie[] gerarCookieComTokenAcesso(TokenDto tokenAcesso) {
         List<NewCookie> listaCookies = new ArrayList<>();
 
-        listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", 
+        listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "app-gestao-associado-frontend.herokuapp.com/", 
         dominioApiRecurso, null, EXPIRA_EM_MINUTOS, false, false));
 
         listaCookies.add(new NewCookie("tokenServico", tokenAcesso.getTokenAcesso(), "/",
