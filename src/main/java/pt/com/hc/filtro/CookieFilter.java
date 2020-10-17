@@ -36,7 +36,7 @@ public class CookieFilter implements ContainerResponseFilter {
             .entrySet()
             .stream()
             .filter(header -> header.getKey().equals("Set-Cookie"))
-            .forEach(header -> header.getValue().forEach(token -> listaCookies.add(token + ";SameSite=Lax")));
+            .forEach(header -> header.getValue().forEach(token -> listaCookies.add(token + ";SameSite=None")));
         responseContext.getHeaders().remove("Set-Cookie");
         listaCookies.forEach(
             cookie -> responseContext.getHeaders().add("Set-Cookie", cookie));
