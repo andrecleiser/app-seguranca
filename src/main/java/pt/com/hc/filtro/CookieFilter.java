@@ -30,13 +30,13 @@ public class CookieFilter implements ContainerResponseFilter {
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
             throws IOException {
         List<String> listaCookies = new ArrayList<String>();
-
+        requestContext.getHeaders().entrySet().forEach(header -> System.out.println(header));
         responseContext
             .getHeaders()
             .entrySet()
             .stream()
             .filter(header -> header.getKey().equals("Set-Cookie"))
-            .forEach(header -> header.getValue().forEach(token -> listaCookies.add(token + ";SameSite=Strict")));
+            .forEach(header -> header.getValue().forEach(token -> listaCookies.add(token + ";SameSite=None")));
         responseContext.getHeaders().remove("Set-Cookie");
         listaCookies.forEach(
             cookie -> responseContext.getHeaders().add("Set-Cookie", cookie));
