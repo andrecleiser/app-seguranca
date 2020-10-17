@@ -30,11 +30,11 @@ public class CookieUtil {
 
         listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", 
         // dominioApiRecurso, null, EXPIRA_EM_MINUTOS, false, false));
-            "herokuapp.com", null, EXPIRA_EM_MINUTOS, false, false));
+            ".herokuapp.com", null, EXPIRA_EM_MINUTOS, false, false));
 
         listaCookies.add(new NewCookie("refreshToken", tokenAcesso.getTokenAcesso(), "/",
             // dominioApiSeguranca, null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
-            "herokuapp.com", null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
+            ".herokuapp.com", null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
 
         NewCookie[] cookies = new NewCookie[listaCookies.size()];
         cookies = listaCookies.toArray(cookies);
