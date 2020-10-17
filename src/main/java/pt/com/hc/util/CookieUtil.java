@@ -30,7 +30,7 @@ public class CookieUtil {
 
         listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", 
         // dominioApiRecurso, null, EXPIRA_EM_MINUTOS, false, false));
-            null, null, EXPIRA_EM_MINUTOS, false, cookieSeguro));
+            null, null, EXPIRA_EM_MINUTOS, cookieSeguro, false));
 
         listaCookies.add(new NewCookie("refreshToken", tokenAcesso.getTokenAcesso(), "/",
             null, null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
