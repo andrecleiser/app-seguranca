@@ -22,7 +22,9 @@ public class CookieResponseFilter implements ContainerResponseFilter {
             throws IOException {
         List<String> listaCookies = new ArrayList<String>();
         String indicaSameSite = cookieSeguro ? ";SameSite=None" : ";SameSite=Lax";
-        
+        requestContext.getHeaders().remove("Host");
+        requestContext.getHeaders().add("Host", "app-gestao-associado-frontend.herokuapp.com");
+
         responseContext
             .getHeaders()
             .entrySet()
