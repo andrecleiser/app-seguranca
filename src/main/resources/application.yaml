@@ -27,7 +27,8 @@
         frontend: ${URL_APLICACAO_FRONTEND}
       cookie:
         seguro: true
-        dominio-api-recurso: api-gestao-associados.herokuapp.com, app-gestao-associado-frontend.herokuapp.com
+        # dominio-api-recurso: app-gestao-associado-frontend.herokuapp.com
+        dominio-api-recurso: ${URL_APLICACAO_FRONTEND}
         dominio-api-seguranca: app-seguranca-api.herokuapp.com
 
 
