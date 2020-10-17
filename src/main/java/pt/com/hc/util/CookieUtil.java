@@ -25,7 +25,7 @@ public class CookieUtil {
         List<NewCookie> listaCookies = new ArrayList<>();
 
         listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", 
-            null, null, tempoVida, false, false));
+            null, null, tempoVida, cookieSeguro, false));
 
         // listaCookies.add(new NewCookie("refreshToken", tokenAcesso.getTokenAcesso(), "/",
         //     null, null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
