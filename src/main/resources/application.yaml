@@ -5,7 +5,9 @@
       url:
         frontend: http://localhost:4200
       cookie:
-        seguro: true
+        seguro: false
+        dominio-api-recurso: localhost
+        dominio-api-seguranca: localhost
     db:
       nome: app_security_db
       host: localhost
@@ -25,6 +27,9 @@
         frontend: ${URL_APLICACAO_FRONTEND}
       cookie:
         seguro: true
+        dominio-api-recurso: api-gestao-associados.herokuapp.com
+        dominio-api-seguranca: app-seguranca-api.herokuapp.com
+
 
     db:
       nome: ${DATABASE_NAME}

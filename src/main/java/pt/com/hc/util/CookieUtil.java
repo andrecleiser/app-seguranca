@@ -19,14 +19,20 @@ public class CookieUtil {
     @ConfigProperty(name = "conf.app.cookie.seguro")
     Boolean cookieSeguro;
 
+    @ConfigProperty(name = "conf.app.cookie.dominio-api-recurso")
+    String dominioApiRecurso;
+
+    @ConfigProperty(name = "conf.app.cookie.dominio-api-seguranca")
+    String dominioApiSeguranca;
+
     public NewCookie[] gerarCookieComTokenAcesso(TokenDto tokenAcesso) {
         List<NewCookie> listaCookies = new ArrayList<>();
 
         listaCookies.add(new NewCookie(NOME_TOKEN_ACESSO, tokenAcesso.getTokenAcesso(), "/", 
-            null, null, EXPIRA_EM_MINUTOS, false, false));
+        dominioApiRecurso, null, EXPIRA_EM_MINUTOS, false, false));
 
         listaCookies.add(new NewCookie("tokenServico", tokenAcesso.getTokenAcesso(), "/",
-            null, null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
+        dominioApiSeguranca, null, EXPIRA_EM_MINUTOS, cookieSeguro, true));
 
         NewCookie[] cookies = new NewCookie[listaCookies.size()];
         cookies = listaCookies.toArray(cookies);
