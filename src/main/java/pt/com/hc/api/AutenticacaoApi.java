@@ -76,6 +76,10 @@ public class AutenticacaoApi {
         usuario = this.autenticacaoServico.validarUsuario(autenticacao.getUsuario(), autenticacao.getSenha());
 
         TokenDto token = this.tokenServico.gerarToken(usuario, chave);
-        return Response.status(Status.CREATED).cookie(this.cookieUtil.gerarCookieComTokenAcesso(token)).build();
+        return Response
+            .status(Status.CREATED)
+            .cookie(this.cookieUtil.gerarCookieComTokenAcesso(token))
+            .entity(token)
+            .build();
     }
 }

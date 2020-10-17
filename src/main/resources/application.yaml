@@ -6,7 +6,6 @@
         frontend: http://localhost:4200
       cookie:
         seguro: false
-        tempo-vida: 300
     db:
       nome: app_security_db
       host: localhost
@@ -26,7 +25,6 @@
         frontend: ${URL_APLICACAO_FRONTEND}
       cookie:
         seguro: true
-        tempo-vida: 600
 
     db:
       nome: ${DATABASE_NAME}
